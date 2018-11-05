@@ -118,8 +118,10 @@ defmodule Mix.Tasks.Coh.Install do
 
   import Macro, only: [camelize: 1, underscore: 1]
   import Mix.Generator
-  import Mix.Ecto
   import Coherence.Mix.Utils
+
+  import Mix.EctoSQL
+  import Mix.Ecto
 
   @shortdoc "Configure the Coherence Package"
 
@@ -680,7 +682,7 @@ defmodule Mix.Tasks.Coh.Install do
           path
 
         _ ->
-          Path.relative_to(migrations_path(repo), Mix.Project.app_path())
+          Path.relative_to(ensure_migrations_path(repo), Mix.Project.app_path())
       end
 
     file = Path.join(path, "#{current_timestamp}_#{underscore(name)}.exs")

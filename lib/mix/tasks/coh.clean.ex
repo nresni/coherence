@@ -46,6 +46,7 @@ defmodule Mix.Tasks.Coh.Clean do
   use Mix.Task
 
   import Coherence.Mix.Utils
+  import Mix.EctoSQL
   import Mix.Ecto
 
   alias Mix.Tasks.Coh.Install
@@ -306,7 +307,7 @@ defmodule Mix.Tasks.Coh.Clean do
 
   defp do_remove!(config, repo) do
     ensure_repo(repo, [])
-    path = Path.relative_to(migrations_path(repo), Mix.Project.app_path())
+    path = Path.relative_to(ensure_migrations_path(repo), Mix.Project.app_path())
 
     case Path.wildcard(path <> "/*coherence*") do
       [] ->
